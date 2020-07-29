@@ -10,12 +10,15 @@ class App extends React.Component {
     this.state = {
       myAppointments:[],
       formDisplay:false,
+      orderBy:'petName',
+      orderDir:'asc',
       lastIndex:0
 
     };
     this.deleteAppointment=this.deleteAppointment.bind(this);
     this.toggleForm=this.toggleForm.bind(this);
     this.addAppointment=this.addAppointment.bind(this);
+    this.changeOrder=this.changeOrder.bind(this);
   }
 
     toggleForm(){
@@ -23,7 +26,12 @@ class App extends React.Component {
         formDisplay:!this.state.formDisplay
       });
     }
-
+    changeOrder(order,dir){
+      this.setState({
+        orderBy:order,
+        orderDir:dir
+      });
+    }
     addAppointment(apt){
       let tempApts=this.state.myAppointments;
       apt.aptId=this.state.lastIndex;
@@ -57,7 +65,21 @@ class App extends React.Component {
     });
   }
   render() {
-    
+    let order;
+    let filteredApts=this.state.myAppointments;
+    if(this.state.orderDir ==='asc'){
+      order=1;
+    }else{
+      order= -1;
+    }
+    filteredApts.sort((a,b)=>{
+      if(a[this.state.orderBy].toLowerCase() <
+      b[this.state.orderBy].toLowerCase()){
+        return -1 * order;
+      }else{
+        return 1 * order;
+      }
+    })
     return (
       <main className="page bg-white" id="petratings">
         <div className="container">
@@ -65,8 +87,9 @@ class App extends React.Component {
             <div className="col-md-12 bg-white">
               <div className="container">
                 <AddAppointments formDisplay={this.state.formDisplay} toggleForm={this.toggleForm} addAppointment={this.addAppointment}/>
-                <SearchAppointments />
-                <ListAppointments appointments={this.state.myAppointments} deleteAppointment={this.deleteAppointment}/>
+                <SearchAppointments orderBy={this.state.orderBy} orderDir={this.state.orderDir} 
+                changeOrder={this.changeOrder}/>
+                <ListAppointments appointments={filteredApts} deleteAppointment={this.deleteAppointment}/>
               </div>
             </div>
           </div>
