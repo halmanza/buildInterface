@@ -1,10 +1,6 @@
 
 <h1>React Interface </h1>
-Fun project building interface via 
-<br>
-<p>React.js: Building an Interface
-By: Ray Villalobos
-Released Feb 13, 2019</p>
+<p> Built interface using tutorial by Ray Villalobos</p>
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
